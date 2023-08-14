@@ -12,7 +12,7 @@ const main = async () => {
     opt = await showMenu(); // lo que sea que resuelva, va a caer en opt
     console.log({ opt });
 
-    if (opt !== '0') await pause();
+    if (opt !== '0') await pause(); // ahora si ingresamos 0 direcatmente termina la ejecucion
     
   } while (opt !== "0");
 };
