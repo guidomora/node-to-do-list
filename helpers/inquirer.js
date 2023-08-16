@@ -10,7 +10,7 @@ const questions = [
     choices: [
       // las opciones y su valor
       {
-        value: "1",
+        value: "1", // el valor va a tener impacto en el switch
         name: `${"1.".green} Create task`,
       },
       {
@@ -84,8 +84,73 @@ const leerInput = async (message) => {
   return desc
 };
 
+const listadoTareasABorrar = async (tareas = []) => { //menu para seleccionar tareas a borrar
+  
+  const choices = tareas.map((tarea ,i) => { //las opciones
+
+    const indice = `${i + 1}.`.green
+    return {
+      value: tarea.id, // obtenemos el id cuando seleccionemos
+      name: `${indice} ${tarea.desc}` 
+    }
+  })
+
+  choices.unshift({ //inserta nuevos elementos al principio de un array
+    value: '0',
+    name: '0.'.green + ' Cancel'
+  })
+
+  const question = [
+    {
+      type: "list",
+      name: "id",
+      message: 'Delete',
+      choices
+    }
+  ]
+  const {id} = await inquirer.prompt(question) // desestructuramos el id de lo que elegimos
+  return id
+}
+
+const confirmar = async (message) => {
+  const question = [
+    {
+      type: "confirm", //regresa un booleano
+      name: "ok",
+      message,
+    }
+  ]
+  const {ok} = await inquirer.prompt(question)
+  return ok
+}
+
+const mostrarListadoCheckList = async (tareas = []) => { //menu para seleccionar tareas a borrar
+  const choices = tareas.map((tarea ,i) => { //las opciones
+    const indice = `${i + 1}.`.green
+    return {
+      value: tarea.id, // obtenemos el id cuando seleccionemos
+      name: `${indice} ${tarea.desc}`,
+      checked: tarea.completedAt ? true : false // las que estan completadas ya las marca
+    }
+  })
+
+  const question = [
+    {
+      type: "checkbox",
+      name: "ids",
+      message: 'Selected',
+      choices
+    }
+  ]
+  const {ids} = await inquirer.prompt(question) // un array de ids nos retorna
+  return ids
+}
+
 module.exports = {
   inquireMenu,
   pause,
-  leerInput
+  leerInput,
+  listadoTareasABorrar,
+  confirmar,
+  mostrarListadoCheckList
 };
