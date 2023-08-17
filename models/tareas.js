@@ -25,10 +25,9 @@ class Tareas {
     }
   }
 
-  setTasksFromArray(tareas = []) {
-    // si no se proporcionan tareas se crea un array vacio
+  setTasksFromArray(tareas = []) {// si no se proporcionan tareas se crea un array vacio
     tareas.forEach((tarea) => {
-      this._listado[tarea.id] = tarea;
+      this._listado[tarea.id] = tarea; // se agrega la tarea en base al id
     });
   }
 
